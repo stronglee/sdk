@@ -1,10 +1,5 @@
 package com.android.common.sdk.update;
 
-import java.io.File;
-
-import com.android.common.sdk.R;
-import com.android.common.sdk.utils.DiskFileUtils;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,6 +13,11 @@ import android.net.Uri;
 import android.view.Gravity;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import com.android.common.sdk.R;
+import com.android.common.sdk.utils.DiskFileUtils;
+
+import java.io.File;
 
 public class UpdateController implements DownLoadListener {
 
@@ -108,16 +108,13 @@ public class UpdateController implements DownLoadListener {
     }
 
     private void notifyDownLoadStart() {
-
         showToastMessage(MSG_DOWN_LOAD_START);
-
         RemoteViews contentView = new RemoteViews(mPackageName, R.layout.cube_mints_update_notify);
         mNotification.icon = mIcon;
         mNotification.tickerText = MSG_DOWN_LOAD_START;
         mNotification.contentView = contentView;
         mNotification.contentView.setProgressBar(R.id.update_notification_progress, 100, 0, false);
         mNotification.contentView.setImageViewResource(R.id.update_notification_icon, mIcon);
-
         mNotifyManager.notify(NOTIFY_ID, mNotification);
     }
 
@@ -130,9 +127,7 @@ public class UpdateController implements DownLoadListener {
         mNotification.contentView.setImageViewResource(R.id.update_notification_icon, mIcon);
         mNotification.contentView.setProgressBar(R.id.update_notification_progress, 100, updatePercent, false);
         mNotification.contentView.setTextViewText(R.id.update_notification_text, "下载进度  " + updatePercent + "%, 点击取消下载");
-
         mNotification.contentView.setOnClickPendingIntent(R.id.update_notification_layout, contentIntent);
-
         mNotifyManager.notify(NOTIFY_ID, mNotification);
     }
 

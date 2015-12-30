@@ -78,9 +78,6 @@ public class NetworkStatusManager {
         mReceiver = new ConnectivityBroadcastReceiver();
     }
 
-    /**
-     * {@link TelephonyManager#getNetworkClass}
-     */
     private static int getMobileNetworkClass(int networkType) {
         switch (networkType) {
             case TelephonyManager.NETWORK_TYPE_GPRS:

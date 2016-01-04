@@ -21,6 +21,9 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+/**
+ * https 对于需要证书的okhttp的封装
+ */
 public class HttpsUtils {
     public static void setCertificates(OkHttpClient okHttpClient, InputStream[] certificates, InputStream bksFile, String password) {
         try {

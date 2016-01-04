@@ -1,8 +1,8 @@
 package com.android.common.sdk.network.builder;
 
+import com.android.common.sdk.network.request.PostStringRequest;
+import com.android.common.sdk.network.request.RequestCall;
 import com.squareup.okhttp.MediaType;
-import com.zhy.http.okhttp.request.PostStringRequest;
-import com.zhy.http.okhttp.request.RequestCall;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -61,7 +61,7 @@ public class PostStringBuilder extends OkHttpRequestBuilder
     {
         if (this.params == null)
         {
-            params = new IdentityHashMap<>();
+            params = new IdentityHashMap<String, String>();
         }
         params.put(key, val);
         return this;
@@ -79,7 +79,7 @@ public class PostStringBuilder extends OkHttpRequestBuilder
     {
         if (this.headers == null)
         {
-            headers = new IdentityHashMap<>();
+            headers = new IdentityHashMap<String, String>();
         }
         headers.put(key, val);
         return this;

@@ -1,20 +1,16 @@
 package com.android.common.sdk.network.request;
 
+import com.android.common.sdk.network.OkHttpUtils;
+import com.android.common.sdk.network.callback.Callback;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by zhy on 15/12/15.
- */
-public class RequestCall
-{
+public class RequestCall {
     private OkHttpRequest okHttpRequest;
     private Request request;
     private Call call;
@@ -26,36 +22,30 @@ public class RequestCall
     private OkHttpClient clone;
 
 
-    public RequestCall(OkHttpRequest request)
-    {
+    public RequestCall(OkHttpRequest request) {
         this.okHttpRequest = request;
     }
 
-    public RequestCall readTimeOut(long readTimeOut)
-    {
+    public RequestCall readTimeOut(long readTimeOut) {
         this.readTimeOut = readTimeOut;
         return this;
     }
 
-    public RequestCall writeTimeOut(long writeTimeOut)
-    {
+    public RequestCall writeTimeOut(long writeTimeOut) {
         this.writeTimeOut = writeTimeOut;
         return this;
     }
 
-    public RequestCall connTimeOut(long connTimeOut)
-    {
+    public RequestCall connTimeOut(long connTimeOut) {
         this.connTimeOut = connTimeOut;
         return this;
     }
 
 
-    public Call generateCall(Callback callback)
-    {
+    public Call generateCall(Callback callback) {
         request = generateRequest(callback);
 
-        if (readTimeOut > 0 || writeTimeOut > 0 || connTimeOut > 0)
-        {
+        if (readTimeOut > 0 || writeTimeOut > 0 || connTimeOut > 0) {
             cloneClient();
 
             readTimeOut = readTimeOut > 0 ? readTimeOut : OkHttpUtils.DEFAULT_MILLISECONDS;
@@ -67,64 +57,49 @@ public class RequestCall
             clone.setConnectTimeout(connTimeOut, TimeUnit.MILLISECONDS);
 
             call = clone.newCall(request);
-        } else
-        {
+        } else {
             call = OkHttpUtils.getInstance().getOkHttpClient().newCall(request);
         }
         return call;
     }
 
-    private Request generateRequest(Callback callback)
-    {
+    private Request generateRequest(Callback callback) {
         return okHttpRequest.generateRequest(callback);
     }
 
-    public void execute(Callback callback)
-    {
-        generateCall(callback);
-
-        if (callback != null)
-        {
-            callback.onBefore(request);
-        }
-
-        OkHttpUtils.getInstance().execute(this, callback);
-    }
-
-    public Call getCall()
-    {
+    public Call getCall() {
         return call;
     }
 
-    public Request getRequest()
-    {
+    public Request getRequest() {
         return request;
     }
 
-    public OkHttpRequest getOkHttpRequest()
-    {
+    public OkHttpRequest getOkHttpRequest() {
         return okHttpRequest;
     }
 
-    public Response execute() throws IOException
-    {
+    public Response execute() throws IOException {
         generateCall(null);
         return call.execute();
     }
 
+    public void execute(Callback callback) {
+        generateCall(callback);
+        if (callback != null) {
+            callback.onBefore(request);
+        }
+        OkHttpUtils.getInstance().execute(this, callback);
+    }
 
-    private void cloneClient()
-    {
+
+    private void cloneClient() {
         clone = OkHttpUtils.getInstance().getOkHttpClient().clone();
     }
 
-    public void cancel()
-    {
-        if (call != null)
-        {
+    public void cancel() {
+        if (call != null) {
             call.cancel();
         }
     }
-
-
 }

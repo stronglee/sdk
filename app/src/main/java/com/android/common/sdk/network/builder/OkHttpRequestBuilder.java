@@ -1,14 +1,11 @@
 package com.android.common.sdk.network.builder;
 
-import com.zhy.http.okhttp.request.RequestCall;
+
+import com.android.common.sdk.network.request.RequestCall;
 
 import java.util.Map;
 
-/**
- * Created by zhy on 15/12/14.
- */
-public abstract class OkHttpRequestBuilder
-{
+public abstract class OkHttpRequestBuilder {
     protected String url;
     protected Object tag;
     protected Map<String, String> headers;

@@ -27,7 +27,7 @@ public class LifeCycleComponentManager implements IComponentContainer {
     public void addComponent(LifeCycleComponent component) {
         if (component != null) {
             if (mComponentList == null) {
-                mComponentList = new HashMap<>();
+                mComponentList = new HashMap<String,LifeCycleComponent>();
             }
             mComponentList.put(component.toString(), component);
         }

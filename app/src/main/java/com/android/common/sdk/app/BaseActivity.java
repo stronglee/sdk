@@ -1,16 +1,15 @@
 package com.android.common.sdk.app;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import com.android.common.sdk.BuildConfig;
 import com.android.common.sdk.app.lifecycle.IComponentContainer;
 import com.android.common.sdk.app.lifecycle.LifeCycleComponent;
 import com.android.common.sdk.app.lifecycle.LifeCycleComponentManager;
 
-import android.os.Bundle;
-import android.util.Log;
-
 /**
  * 1. manager the components when move from a lifetime to another
- *
  */
 public abstract class BaseActivity extends BaseFragmentActivity implements IComponentContainer {
 

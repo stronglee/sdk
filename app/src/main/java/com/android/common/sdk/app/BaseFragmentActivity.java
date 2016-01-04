@@ -1,22 +1,19 @@
 package com.android.common.sdk.app;
 
-import com.android.common.sdk.BuildConfig;
-
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.android.common.sdk.BuildConfig;
 
 public abstract class BaseFragmentActivity extends FragmentActivity {
 
-    private final static String LOG_TAG = "cube-fragment";
+    private final static String LOG_TAG = BaseFragmentActivity.class.getSimpleName();
 
     public static boolean DEBUG = BuildConfig.DEBUG;
     protected BaseFragment mCurrentFragment;
@@ -56,7 +53,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
             String fragmentTag = getFragmentTag(param);
             FragmentManager fm = getSupportFragmentManager();
             if (DEBUG) {
-               // Log.d(LOG_TAG, "before operate, stack entry count: %s", fm.getBackStackEntryCount());
+                Log.d(LOG_TAG, "before operate, stack entry count: %s" + fm.getBackStackEntryCount());
             }
             BaseFragment fragment = (BaseFragment) fm.findFragmentByTag(fragmentTag);
             if (fragment == null) {
@@ -70,12 +67,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
             FragmentTransaction ft = fm.beginTransaction();
             if (fragment.isAdded()) {
                 if (DEBUG) {
-                    //Log.d( "%s has been added, will be shown again.", fragmentTag);
+                    Log.d(LOG_TAG, "%s has been added, will be shown again." + fragmentTag);
                 }
                 ft.show(fragment);
             } else {
                 if (DEBUG) {
-                    Log.d( "%s is added.", fragmentTag);
+                    Log.d("%s is added.", fragmentTag);
                 }
                 ft.add(containerId, fragment, fragmentTag);
             }
@@ -187,25 +184,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
                 mCurrentFragment.onBack();
             }
         }
-    }
-
-    public void hideKeyboardForCurrentFocus() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (getCurrentFocus() != null) {
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-    }
-
-    public void showKeyboardAtView(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-    }
-
-    public void forceShowKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
     }
 
     protected void exitFullScreen() {

@@ -1,16 +1,16 @@
 package com.android.common.sdk.app;
 
-import com.android.common.sdk.BuildConfig;
-import com.android.common.sdk.app.lifecycle.IComponentContainer;
-import com.android.common.sdk.app.lifecycle.LifeCycleComponent;
-import com.android.common.sdk.app.lifecycle.LifeCycleComponentManager;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.android.common.sdk.BuildConfig;
+import com.android.common.sdk.app.lifecycle.IComponentContainer;
+import com.android.common.sdk.app.lifecycle.LifeCycleComponent;
+import com.android.common.sdk.app.lifecycle.LifeCycleComponentManager;
 
 /**
  * Implement {@link ILifecycleFragment}, {@link IComponentContainer}
@@ -32,9 +32,9 @@ public abstract class BaseFragment extends Fragment implements ILifecycleFragmen
     }
 
     /**
-     * ===========================================================
+     *
      * Implements {@link ILifecycleFragment}
-     * ===========================================================
+     *
      */
     @Override
     public void onEnter(Object data) {

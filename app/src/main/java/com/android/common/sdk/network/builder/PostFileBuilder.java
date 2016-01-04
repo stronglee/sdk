@@ -1,8 +1,8 @@
 package com.android.common.sdk.network.builder;
 
+import com.android.common.sdk.network.request.PostFileRequest;
+import com.android.common.sdk.network.request.RequestCall;
 import com.squareup.okhttp.MediaType;
-import com.zhy.http.okhttp.request.PostFileRequest;
-import com.zhy.http.okhttp.request.RequestCall;
 
 import java.io.File;
 import java.util.IdentityHashMap;
@@ -11,76 +11,64 @@ import java.util.Map;
 /**
  * Created by zhy on 15/12/14.
  */
-public class PostFileBuilder extends OkHttpRequestBuilder
-{
+public class PostFileBuilder extends OkHttpRequestBuilder {
     private File file;
     private MediaType mediaType;
 
 
-    public OkHttpRequestBuilder file(File file)
-    {
+    public OkHttpRequestBuilder file(File file) {
         this.file = file;
         return this;
     }
 
-    public OkHttpRequestBuilder mediaType(MediaType mediaType)
-    {
+    public OkHttpRequestBuilder mediaType(MediaType mediaType) {
         this.mediaType = mediaType;
         return this;
     }
 
 
     @Override
-    public RequestCall build()
-    {
+    public RequestCall build() {
         return new PostFileRequest(url, tag, params, headers, file, mediaType).build();
     }
 
     @Override
-    public PostFileBuilder url(String url)
-    {
+    public PostFileBuilder url(String url) {
         this.url = url;
         return this;
     }
 
     @Override
-    public PostFileBuilder tag(Object tag)
-    {
+    public PostFileBuilder tag(Object tag) {
         this.tag = tag;
         return this;
     }
 
     @Override
-    public PostFileBuilder params(Map<String, String> params)
-    {
+    public PostFileBuilder params(Map<String, String> params) {
         this.params = params;
         return this;
     }
 
     @Override
-    public PostFileBuilder addParams(String key, String val)
-    {
-        if (this.params == null)
-        {
-            params = new IdentityHashMap<>();
+    public PostFileBuilder addParams(String key, String val) {
+        if (this.params == null) {
+            params = new IdentityHashMap<String, String>();
         }
         params.put(key, val);
         return this;
     }
 
     @Override
-    public PostFileBuilder headers(Map<String, String> headers)
-    {
+    public PostFileBuilder headers(Map<String, String> headers) {
         this.headers = headers;
         return this;
     }
 
     @Override
-    public PostFileBuilder addHeader(String key, String val)
-    {
-        if (this.headers == null)
-        {
-            headers = new IdentityHashMap<>();
+    public PostFileBuilder addHeader(String key, String val) {
+        if (this.headers == null) {
+            headers = new IdentityHashMap<String, String>();
         }
         headers.put(key, val);
         return this;

@@ -1,9 +1,9 @@
 package com.android.common.sdk.network.request;
 
+import com.android.common.sdk.utils.Exceptions;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
-import com.zhy.http.okhttp.utils.Exceptions;
 
 import java.io.File;
 import java.util.Map;

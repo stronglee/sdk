@@ -5,9 +5,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.android.common.sdk.network.OkHttpUtils;
+import com.android.common.sdk.network.callback.StringCallback;
+import com.facebook.stetho.okhttp.StethoInterceptor;
+import com.squareup.okhttp.Request;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        testGetRequest();
     }
 
     @Override
@@ -44,9 +51,27 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            testGetRequest();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void testGetRequest() {
+        OkHttpUtils.getInstance().getOkHttpClient().networkInterceptors().add(new StethoInterceptor());
+        OkHttpUtils.get().url(Const.BAIDU).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 }

@@ -8,8 +8,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import za.co.riggaroo.materialhelptutorial.MaterialTutorialFragment;
-import za.co.riggaroo.materialhelptutorial.TutorialItem;
 
 /**
  * @author rebeccafranks
@@ -29,7 +27,7 @@ public class MaterialTutorialPresenter implements MaterialTutorialContract.UserA
 
     @Override
     public void loadViewPagerFragments(List<TutorialItem> tutorialItems) {
-        fragments = new ArrayList<>();
+        fragments = new ArrayList<MaterialTutorialFragment>();
         this.tutorialItems = tutorialItems;
         for (int i = 0; i < tutorialItems.size(); i++) {
             MaterialTutorialFragment helpTutorialImageFragment;

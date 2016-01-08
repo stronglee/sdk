@@ -1,9 +1,9 @@
 package com.android.common.sdk.tutorial;
 
-import android.app.ActionBar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -12,13 +12,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.common.sdk.R;
+import com.orhanobut.logger.Logger;
+
 import java.util.List;
 
-import za.co.riggaroo.materialhelptutorial.MaterialTutorialFragment;
-import za.co.riggaroo.materialhelptutorial.R;
-import za.co.riggaroo.materialhelptutorial.TutorialItem;
-import za.co.riggaroo.materialhelptutorial.adapter.MaterialTutorialAdapter;
-import za.co.riggaroo.materialhelptutorial.view.CirclePageIndicator;
 
 
 public class MaterialTutorialActivity extends AppCompatActivity implements MaterialTutorialContract.View {
@@ -48,10 +46,11 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
 
         materialTutorialPresenter = new MaterialTutorialPresenter(this, this);
         setStatusBarColor();
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            getActionBar().hide();
+            Logger.e("hider()");
+            actionBar.hide();
         }
         mRootView = findViewById(R.id.activity_help_root);
         mHelpTutorialViewPager = (ViewPager) findViewById(R.id.activity_help_view_pager);

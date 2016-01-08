@@ -1,5 +1,6 @@
 package com.example.stronglee.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
             testGetRequest();
             return true;
         }
+        if(id == R.id.action_fragment){
+            startContent();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -73,5 +77,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void startContent(){
+        Intent intent = new Intent(MainActivity.this,ContentActivity.class);
+        startActivity(intent);
     }
 }

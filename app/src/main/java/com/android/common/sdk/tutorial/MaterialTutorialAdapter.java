@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import za.co.riggaroo.materialhelptutorial.MaterialTutorialFragment;
-
 
 public class MaterialTutorialAdapter extends FragmentPagerAdapter {
 

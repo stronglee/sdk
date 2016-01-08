@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.common.sdk.BuildConfig;
 import com.android.common.sdk.app.lifecycle.IComponentContainer;
 import com.android.common.sdk.app.lifecycle.LifeCycleComponent;
 import com.android.common.sdk.app.lifecycle.LifeCycleComponentManager;
+import com.orhanobut.logger.Logger;
 
 /**
  * Implement {@link ILifecycleFragment}, {@link IComponentContainer}
@@ -18,8 +18,6 @@ import com.android.common.sdk.app.lifecycle.LifeCycleComponentManager;
  * Ignore {@link LifeCycleComponentManager#onBecomesPartiallyInvisible}
  */
 public abstract class BaseFragment extends Fragment implements ILifecycleFragment, IComponentContainer {
-
-    private static final boolean DEBUG = BuildConfig.DEBUG;
     protected Object mDataIn;
     private boolean mFirstResume = true;
 
@@ -39,24 +37,18 @@ public abstract class BaseFragment extends Fragment implements ILifecycleFragmen
     @Override
     public void onEnter(Object data) {
         mDataIn = data;
-        if (DEBUG) {
-            showStatus("onEnter");
-        }
+        Logger.d("onEnter");
     }
 
     @Override
     public void onLeave() {
-        if (DEBUG) {
-            showStatus("onLeave");
-        }
+        Logger.d("onLeave");
         mComponentContainer.onBecomesTotallyInvisible();
     }
 
     @Override
     public void onBackWithData(Object data) {
-        if (DEBUG) {
-            showStatus("onBackWithData");
-        }
+        Logger.d("onBackWithData");
         mComponentContainer.onBecomesVisibleFromTotallyInvisible();
     }
 
@@ -67,17 +59,10 @@ public abstract class BaseFragment extends Fragment implements ILifecycleFragmen
 
     @Override
     public void onBack() {
-        if (DEBUG) {
-            showStatus("onBack");
-        }
+        Logger.d("onBack");
         mComponentContainer.onBecomesVisibleFromTotallyInvisible();
     }
 
-    /**
-     * ===========================================================
-     * Implements {@link IComponentContainer}
-     * ===========================================================
-     */
     @Override
     public void addComponent(LifeCycleComponent component) {
         mComponentContainer.addComponent(component);
@@ -89,9 +74,7 @@ public abstract class BaseFragment extends Fragment implements ILifecycleFragmen
     @Override
     public void onStop() {
         super.onStop();
-        if (DEBUG) {
-            showStatus("onStop");
-        }
+        Logger.d("onStop");
         onLeave();
     }
 
@@ -108,86 +91,63 @@ public abstract class BaseFragment extends Fragment implements ILifecycleFragmen
         if (mFirstResume) {
             mFirstResume = false;
         }
-        if (DEBUG) {
-            showStatus("onResume");
-        }
+        Logger.d("onResume");
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (DEBUG) {
-            showStatus("onAttach");
-        }
+        Logger.d("onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (DEBUG) {
-            showStatus("onCreate");
-        }
+        Logger.d("onCreate");
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (DEBUG) {
-            showStatus("onActivityCreated");
-        }
+        Logger.d("onActivityCreated");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (DEBUG) {
-            showStatus("onStart");
-        }
+        Logger.d("onStart");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (DEBUG) {
-            showStatus("onPause");
-        }
+        Logger.d("onPause");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (DEBUG) {
-            showStatus("onDestroyView");
-        }
+        Logger.d("onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (DEBUG) {
-            showStatus("onDestroy");
-        }
+        Logger.d("onDestroy");
         mComponentContainer.onDestroy();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        if (DEBUG) {
-            showStatus("onDetach");
-        }
+        Logger.d("onDetach");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (DEBUG) {
-            showStatus("onCreateView");
-        }
-        return super.onCreateView(inflater, container, savedInstanceState);
+        Logger.d("onCreateView");
+        // TODO
+        return createView(inflater,container,savedInstanceState);
     }
 
-    private void showStatus(String status) {
-        final String[] className = ((Object) this).getClass().getName().split("\\.");
-        // CLog.d("cube-lifecycle", "%s %s", className[className.length - 1], status);
-    }
 }

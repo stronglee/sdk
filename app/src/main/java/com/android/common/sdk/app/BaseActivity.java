@@ -3,7 +3,6 @@ package com.android.common.sdk.app;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.android.common.sdk.BuildConfig;
 import com.android.common.sdk.app.lifecycle.IComponentContainer;
 import com.android.common.sdk.app.lifecycle.LifeCycleComponent;
 import com.android.common.sdk.app.lifecycle.LifeCycleComponentManager;
@@ -15,7 +14,7 @@ public abstract class BaseActivity extends BaseFragmentActivity implements IComp
 
     private LifeCycleComponentManager mComponentContainer = new LifeCycleComponentManager();
 
-    private static final boolean DEBUG = BuildConfig.DEBUG;
+    private static final boolean DEBUG = true;
 
     @Override
     protected void onRestart() {
@@ -40,6 +39,7 @@ public abstract class BaseActivity extends BaseFragmentActivity implements IComp
         super.onResume();
         mComponentContainer.onBecomesVisibleFromPartiallyInvisible();
         if (DEBUG) {
+            ViewServer.get(this).setFocusedWindow(this);
             showStatus("onResume");
         }
     }
@@ -48,6 +48,7 @@ public abstract class BaseActivity extends BaseFragmentActivity implements IComp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (DEBUG) {
+            ViewServer.get(this).addWindow(this);
             showStatus("onCreate");
         }
     }
@@ -66,6 +67,7 @@ public abstract class BaseActivity extends BaseFragmentActivity implements IComp
         super.onDestroy();
         mComponentContainer.onDestroy();
         if (DEBUG) {
+            ViewServer.get(this).removeWindow(this);
             showStatus("onDestroy");
         }
     }

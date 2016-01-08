@@ -1,11 +1,6 @@
 package com.android.common.sdk.tutorial;
 
-import android.view.View;
-
 import java.util.List;
-
-import za.co.riggaroo.materialhelptutorial.MaterialTutorialFragment;
-import za.co.riggaroo.materialhelptutorial.TutorialItem;
 
 /**
  * @author rebeccafranks

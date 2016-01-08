@@ -9,13 +9,11 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.android.common.sdk.BuildConfig;
-
 public abstract class BaseFragmentActivity extends FragmentActivity {
 
     private final static String LOG_TAG = BaseFragmentActivity.class.getSimpleName();
 
-    public static boolean DEBUG = BuildConfig.DEBUG;
+    public static boolean DEBUG = true;
     protected BaseFragment mCurrentFragment;
     private boolean mCloseWarned;
 
@@ -38,66 +36,21 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         goToThisFragment(param);
     }
 
-    protected String getFragmentTag(FragmentParam param) {
-        StringBuilder sb = new StringBuilder(param.cls.toString());
-        return sb.toString();
-    }
-
-    private void goToThisFragment(FragmentParam param) {
-        int containerId = getFragmentContainerId();
-        Class<?> cls = param.cls;
-        if (cls == null) {
-            return;
-        }
-        try {
-            String fragmentTag = getFragmentTag(param);
-            FragmentManager fm = getSupportFragmentManager();
-            if (DEBUG) {
-                Log.d(LOG_TAG, "before operate, stack entry count: %s" + fm.getBackStackEntryCount());
-            }
-            BaseFragment fragment = (BaseFragment) fm.findFragmentByTag(fragmentTag);
-            if (fragment == null) {
-                fragment = (BaseFragment) cls.newInstance();
-            }
-            if (mCurrentFragment != null && mCurrentFragment != fragment) {
-                mCurrentFragment.onLeave();
-            }
-            fragment.onEnter(param.data);
-
-            FragmentTransaction ft = fm.beginTransaction();
-            if (fragment.isAdded()) {
-                if (DEBUG) {
-                    Log.d(LOG_TAG, "%s has been added, will be shown again." + fragmentTag);
-                }
-                ft.show(fragment);
-            } else {
-                if (DEBUG) {
-                    Log.d("%s is added.", fragmentTag);
-                }
-                ft.add(containerId, fragment, fragmentTag);
-            }
-            mCurrentFragment = fragment;
-
-            ft.addToBackStack(fragmentTag);
-            ft.commitAllowingStateLoss();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        mCloseWarned = false;
-    }
-
     public void goToFragment(Class<?> cls, Object data) {
         if (cls == null) {
             return;
         }
+        getSupportFragmentManager().getBackStackEntryCount();
+        getSupportFragmentManager().getFragments();
+        getSupportFragmentManager().getBackStackEntryAt(0);
+        getSupportFragmentManager().getBackStackEntryAt(1);
         BaseFragment fragment = (BaseFragment) getSupportFragmentManager().findFragmentByTag(cls.toString());
         if (fragment != null) {
             mCurrentFragment = fragment;
             fragment.onBackWithData(data);
         }
         getSupportFragmentManager().popBackStackImmediate(cls.toString(), 0);
+        getSupportFragmentManager().getBackStackEntryCount();
     }
 
     public void popTopFragment(Object data) {
@@ -184,6 +137,56 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
                 mCurrentFragment.onBack();
             }
         }
+    }
+
+    protected String getFragmentTag(FragmentParam param) {
+        StringBuilder sb = new StringBuilder(param.cls.toString());
+        return sb.toString();
+    }
+
+    private void goToThisFragment(FragmentParam param) {
+        int containerId = getFragmentContainerId();
+        Class<?> cls = param.cls;
+        if (cls == null) {
+            return;
+        }
+        try {
+            String fragmentTag = getFragmentTag(param);
+            FragmentManager fm = getSupportFragmentManager();
+            if (DEBUG) {
+                Log.d(LOG_TAG, "before operate, stack entry count : " + fm.getBackStackEntryCount());
+            }
+            BaseFragment fragment = (BaseFragment) fm.findFragmentByTag(fragmentTag);
+            if (fragment == null) {
+                fragment = (BaseFragment) cls.newInstance();
+            }
+            if (mCurrentFragment != null && mCurrentFragment != fragment) {
+                mCurrentFragment.onLeave();
+            }
+            fragment.onEnter(param.data);
+
+            FragmentTransaction ft = fm.beginTransaction();
+            if (fragment.isAdded()) {
+                if (DEBUG) {
+                    Log.d(LOG_TAG, fragmentTag + "  has been added, will be shown again." );
+                }
+                ft.show(fragment);
+            } else {
+                if (DEBUG) {
+                    Log.d(LOG_TAG, fragmentTag +  " is added." );
+                }
+                ft.add(containerId, fragment, fragmentTag);
+            }
+            mCurrentFragment = fragment;
+
+            ft.addToBackStack(fragmentTag);
+            ft.commitAllowingStateLoss();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        mCloseWarned = false;
     }
 
     protected void exitFullScreen() {

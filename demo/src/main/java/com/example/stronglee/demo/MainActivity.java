@@ -1,86 +1,122 @@
 package com.example.stronglee.demo;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import com.android.common.sdk.network.OkHttpUtils;
-import com.android.common.sdk.network.callback.StringCallback;
-import com.facebook.stetho.okhttp.StethoInterceptor;
-import com.squareup.okhttp.Request;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    private ListView mListView;
+    private ArrayList<ItemData> mDataList;
+    private ActivityAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_main2);
+        mListView = (ListView) findViewById(R.id.main_list_view);
+        mDataList = new ArrayList<>();
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (packageInfo != null&& packageInfo.activities != null) {
+                for (ActivityInfo info : packageInfo.activities) {
+                    ItemData data = new ItemData();
+                    data.name = info.applicationInfo.className;
+                    data.explain = info.name;
+                    mDataList.add(data);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                }
             }
-        });
-        testGetRequest();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        mAdapter = new ActivityAdapter(this);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ItemData data = mDataList.get(position);
+        if(data != null){
+            Intent intent = new Intent();
+            intent.setClassName(getPackageName(),data.explain);
+            startActivity(intent);
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private class ActivityAdapter extends BaseAdapter {
+        private LayoutInflater mLayoutInfalter;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            testGetRequest();
-            return true;
-        }
-        if(id == R.id.action_fragment){
-            startContent();
+        public ActivityAdapter(Context context) {
+            mLayoutInfalter = LayoutInflater.from(context);
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        public int getCount() {
+            if (mDataList != null) {
+                return mDataList.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public ItemData getItem(int position) {
+            if (position < getCount()) {
+                return mDataList.get(position);
+            }
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = mLayoutInfalter.inflate(R.layout.activity_item_layout, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.mTitle = (TextView) convertView.findViewById(R.id.activity_item_title);
+                viewHolder.mSubTitle = (TextView) convertView.findViewById(R.id.activity_item_sub);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            ItemData data = getItem(position);
+            if (data != null) {
+                viewHolder.mTitle.setText(data.name);
+                viewHolder.mSubTitle.setText(data.explain);
+            }
+            return convertView;
+        }
     }
 
-    private void testGetRequest() {
-        OkHttpUtils.getInstance().getOkHttpClient().networkInterceptors().add(new StethoInterceptor());
-        OkHttpUtils.get().url(Const.BAIDU).build().execute(new StringCallback() {
-            @Override
-            public void onError(Request request, Exception e) {
-
-            }
-
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
-            }
-        });
-
-
+    private class ItemData {
+        public String name;
+        public String explain;
     }
 
-    private void startContent(){
-        Intent intent = new Intent(MainActivity.this,ContentActivity.class);
-        startActivity(intent);
+    private class ViewHolder {
+        public TextView mTitle;
+        public TextView mSubTitle;
     }
 }

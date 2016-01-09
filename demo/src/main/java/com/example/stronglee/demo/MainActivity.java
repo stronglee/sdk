@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             ItemData data = getItem(position);
             if (data != null) {
                 viewHolder.mTitle.setText(data.name);
-                viewHolder.mSubTitle.setText(data.className);
+                //viewHolder.mSubTitle.setText(data.className);
             }
             return convertView;
         }

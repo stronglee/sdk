@@ -31,7 +31,7 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:text="下载中"
-                android:textColor="#ffffff"
+                android:textColor="#ff0000"
                 android:textSize="14sp" />
 
             <ProgressBar

@@ -17,22 +17,26 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ContentActivity">
             <intent-filter>
-                <action android:name="com.example.stronglee.demo"></action>
+                <action android:name="com.example.stronglee.demo" />
             </intent-filter>
         </activity>
         <activity android:name="com.android.common.sdk.tutorial.MaterialTutorialActivity" />
         <activity android:name=".TutorialActivity">
             <intent-filter>
-                <action android:name="com.example.stronglee.demo"></action>
+                <action android:name="com.example.stronglee.demo" />
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".UpdateApplication">
+            <intent-filter>
+                <action android:name="com.example.stronglee.demo" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -1,11 +1,9 @@
 package com.example.stronglee.demo;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -17,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ListView mListView;
@@ -29,23 +28,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         mListView = (ListView) findViewById(R.id.main_list_view);
-        mDataList = new ArrayList<>();
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        PackageManager packageManager = getPackageManager();
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
-            if (packageInfo != null&& packageInfo.activities != null) {
-                for (ActivityInfo info : packageInfo.activities) {
-                    ItemData data = new ItemData();
-                    data.name = info.applicationInfo.className;
-                    data.explain = info.name;
-                    mDataList.add(data);
-
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        mDataList = getListData(Const.QUERY_ACTION);
         mAdapter = new ActivityAdapter(this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
@@ -54,18 +37,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ItemData data = mDataList.get(position);
-        if(data != null){
+        if (data != null) {
             Intent intent = new Intent();
-            intent.setClassName(getPackageName(),data.explain);
+            intent.setClassName(getPackageName(), data.className);
             startActivity(intent);
         }
     }
 
+    private ArrayList<ItemData> getListData(String action) {
+        ArrayList<ItemData> result = new ArrayList<>();
+        PackageManager packageManager = getPackageManager();
+        Intent query = new Intent(action, null);
+        List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(query, 0);
+        if (resolveInfoList != null && resolveInfoList.size() > 0) {
+            for (ResolveInfo info : resolveInfoList) {
+                ItemData data = new ItemData();
+                data.className = info.activityInfo.name;
+                String[] nameList = data.className.split("\\.");
+                data.name = nameList[nameList.length - 1];
+                result.add(data);
+            }
+        }
+        return result;
+    }
+
     private class ActivityAdapter extends BaseAdapter {
-        private LayoutInflater mLayoutInfalter;
+        private LayoutInflater mLayoutInflater;
 
         public ActivityAdapter(Context context) {
-            mLayoutInfalter = LayoutInflater.from(context);
+            mLayoutInflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = mLayoutInfalter.inflate(R.layout.activity_item_layout, parent, false);
+                convertView = mLayoutInflater.inflate(R.layout.activity_item_layout, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.mTitle = (TextView) convertView.findViewById(R.id.activity_item_title);
                 viewHolder.mSubTitle = (TextView) convertView.findViewById(R.id.activity_item_sub);
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             ItemData data = getItem(position);
             if (data != null) {
                 viewHolder.mTitle.setText(data.name);
-                viewHolder.mSubTitle.setText(data.explain);
+                viewHolder.mSubTitle.setText(data.className);
             }
             return convertView;
         }
@@ -112,7 +112,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private class ItemData {
         public String name;
-        public String explain;
+        public String className;
+
+        @Override
+        public String toString() {
+            return "ItemData{" +
+                    "name='" + name + '\'' +
+                    ", className='" + className + '\'' +
+                    '}';
+        }
     }
 
     private class ViewHolder {

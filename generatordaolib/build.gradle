@@ -1,4 +1,21 @@
 apply plugin: 'java'
+// 让代码可以运行加入application插件
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+// 设置主函数
+mainClassName = "com.example.GeneratorGreenDao"
+
+def outputDir = "/Users/stronglee/Github/sdk/demo/src/main/java-gen"
+
+//Gradle Wrapper是开始一个Gradle构建的首选方式。
+// 它包含了windows批处理以及OS X和Linux的Shell脚本。
+// 这些脚本允许我们在没有安装Gradle的系统上执行Gradle构建
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

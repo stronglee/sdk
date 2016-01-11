@@ -1,4 +1,4 @@
-package com.example.stronglee.demo;
+package com.example.stronglee.demo.data;
 
 /**
  * Created by stronglee on 15/12/30.

@@ -37,6 +37,16 @@
                 <action android:name="com.example.stronglee.demo" />
             </intent-filter>
         </activity>
+        <activity android:name=".OkHttpActivity">
+            <intent-filter>
+                <action android:name="com.example.stronglee.demo" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".NoteActivity">
+            <intent-filter>
+                <action android:name="com.example.stronglee.demo" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

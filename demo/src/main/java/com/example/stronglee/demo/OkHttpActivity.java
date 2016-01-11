@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.android.common.sdk.network.OkHttpUtils;
 import com.android.common.sdk.network.callback.StringCallback;
+import com.example.stronglee.demo.data.Const;
 import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Request;
 
@@ -55,7 +56,7 @@ public class OkHttpActivity extends AppCompatActivity {
             testGetRequest();
             return true;
         }
-        if(id == R.id.action_fragment){
+        if (id == R.id.action_fragment) {
             startContent();
         }
 
@@ -75,12 +76,10 @@ public class OkHttpActivity extends AppCompatActivity {
                 Toast.makeText(OkHttpActivity.this, response, Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
-    private void startContent(){
-        Intent intent = new Intent(OkHttpActivity.this,ContentActivity.class);
+    private void startContent() {
+        Intent intent = new Intent(OkHttpActivity.this, ContentActivity.class);
         startActivity(intent);
     }
 }

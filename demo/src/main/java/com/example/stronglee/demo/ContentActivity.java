@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.common.sdk.app.BaseActivity;
+import com.example.stronglee.demo.fragment.FragmentOne;
+import com.example.stronglee.demo.fragment.FragmentTwo;
 
 /**
  * Created by stronglee on 16/1/6.

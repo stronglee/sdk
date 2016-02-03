@@ -1,15 +1,14 @@
 package com.android.common.sdk.update;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * A class which encapsulate a task that can execute in background thread and can be cancelled.
  * memory require:
- * <p/>
  * Shadow heap size of AtomicInteger: 12 + 4  = 16 bytes;
  * Shadow heap size of SimpleTask: 12 + 4 + 4 = 20. After aligned: 24 bytes;
  * Retained heap size of SimpleTask: 16 + 24 = 40 bytes.
@@ -68,6 +67,7 @@ public abstract class SimpleTask implements Runnable {
 
     /**
      * check whether this work is canceled.
+     * @return boolean
      */
     public boolean isCancelled() {
         return mState.get() == STATE_CANCELLED;

@@ -18,10 +18,10 @@ import com.example.stronglee.demo.R;
  */
 public class AddItemDialog extends DialogFragment {
 
-    private EditText edit_onetable_name;
-    private EditText edit_onetable_sex;
-    private EditText edit_onetable_tel;
-    private EditText edit_onetable_age;
+    private EditText mNameView;
+    private EditText mSexView;
+    private EditText mPhoneView;
+    private EditText mAgeView;
 
     private String uName;                                      //用户姓名
     private String uSex;                                       //用户性别
@@ -59,16 +59,16 @@ public class AddItemDialog extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_onetable_dialog, null);
-        edit_onetable_name = (EditText) view.findViewById(R.id.edit_onetable_name);
-        edit_onetable_sex = (EditText) view.findViewById(R.id.edit_onetable_sex);
-        edit_onetable_tel = (EditText) view.findViewById(R.id.edit_onetable_tel);
-        edit_onetable_age = (EditText) view.findViewById(R.id.edit_onetable_age);
+        mNameView = (EditText) view.findViewById(R.id.edit_onetable_name);
+        mSexView = (EditText) view.findViewById(R.id.edit_onetable_sex);
+        mPhoneView = (EditText) view.findViewById(R.id.edit_onetable_tel);
+        mAgeView = (EditText) view.findViewById(R.id.edit_onetable_age);
 
 
-        edit_onetable_name.setText(uName);
-        edit_onetable_age.setText(uAge);
-        edit_onetable_sex.setText(uSex);
-        edit_onetable_tel.setText(uTel);
+        mNameView.setText(uName);
+        mAgeView.setText(uAge);
+        mSexView.setText(uSex);
+        mPhoneView.setText(uTel);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -80,19 +80,19 @@ public class AddItemDialog extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 addUserOnClickListener listener = (addUserOnClickListener) getActivity();
-                                listener.onAddUserOnClick(uId, edit_onetable_name.getText().toString(),
-                                        edit_onetable_sex.getText().toString(),
-                                        edit_onetable_age.getText().toString(),
-                                        edit_onetable_tel.getText().toString(),
+                                listener.onAddUserOnClick(uId, mNameView.getText().toString(),
+                                        mSexView.getText().toString(),
+                                        mAgeView.getText().toString(),
+                                        mPhoneView.getText().toString(),
                                         flag);
                             }
                         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                edit_onetable_name.setText("");
-                edit_onetable_sex.setText("");
-                edit_onetable_age.setText("");
-                edit_onetable_tel.setText("");
+                mNameView.setText("");
+                mSexView.setText("");
+                mAgeView.setText("");
+                mPhoneView.setText("");
             }
         });
         return builder.create();

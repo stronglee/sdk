@@ -1,6 +1,7 @@
 apply plugin: 'java'
 // 让代码可以运行加入application插件
 apply plugin: 'application'
+apply plugin:'maven'
 
 repositories {
     mavenCentral()
@@ -8,7 +9,7 @@ repositories {
 // 设置主函数
 mainClassName = "com.example.GeneratorGreenDao"
 
-def outputDir = "/Users/stronglee/Github/sdk/demo/src/main/java-gen"
+def outputDir = "../demo/src/main/java-gen"
 
 //Gradle Wrapper是开始一个Gradle构建的首选方式。
 // 它包含了windows批处理以及OS X和Linux的Shell脚本。
@@ -16,8 +17,25 @@ def outputDir = "/Users/stronglee/Github/sdk/demo/src/main/java-gen"
 task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
-
+task compile << {
+    printf 'compiling source'
+}
+task createDir{
+    def docs = file(outputDir)
+    docs.mkdirs()
+}
+ run{
+    args outputDir
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'de.greenrobot:greendao-generator:2.1.0'
+}
+// 添加publication
+uploadArchives{
+    repositories{
+        mavenDeployer{
+            repository(url:"file:///Users/stronglee/Github/sdk/generatordaolib/")
+        }
+    }
 }

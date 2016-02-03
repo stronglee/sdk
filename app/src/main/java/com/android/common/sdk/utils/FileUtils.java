@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.graphics.Bitmap.CompressFormat;
 import android.content.CursorLoader;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -33,9 +34,6 @@ import java.nio.channels.FileChannel;
 
 public class FileUtils {
 
-    /**
-     * Returns the remainder of 'reader' as a string, closing it when done.
-     */
     public static String readFully(Reader reader) throws IOException {
         try {
             StringWriter writer = new StringWriter();
@@ -50,13 +48,6 @@ public class FileUtils {
         }
     }
 
-    /**
-     * Returns the ASCII characters up to but not including the next "\r\n", or
-     * "\n".
-     *
-     * @throws EOFException if the stream is exhausted before the next newline
-     *                      character.
-     */
     public static String readAsciiLine(InputStream in) throws IOException {
         StringBuilder result = new StringBuilder(80);
         while (true) {
@@ -76,9 +67,7 @@ public class FileUtils {
         return result.toString();
     }
 
-    /**
-     * Closes 'closeable', ignoring any checked exceptions. Does nothing if 'closeable' is null.
-     */
+
     public static void closeQuietly(Closeable closeable) {
         if (closeable != null) {
             try {
@@ -90,9 +79,6 @@ public class FileUtils {
         }
     }
 
-    /**
-     * Try to delete directory in a fast way.
-     */
     public static void deleteDirectoryQuickly(File dir) throws IOException {
 
         if (!dir.exists()) {
@@ -140,12 +126,6 @@ public class FileUtils {
         }
     }
 
-    /**
-     * recursively delete
-     *
-     * @param dir
-     * @throws IOException
-     */
     public static void deleteDirectoryRecursively(File dir) throws IOException {
         File[] files = dir.listFiles();
         if (files == null) {
@@ -172,10 +152,16 @@ public class FileUtils {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
         FileWriter writer = null;
         try {
-
             writer = new FileWriter(file);
             writer.write(content);
 
@@ -183,7 +169,6 @@ public class FileUtils {
         } finally {
             try {
                 if (writer != null) {
-
                     writer.close();
                     return true;
                 }
@@ -311,11 +296,10 @@ public class FileUtils {
     }
 
 
-
     /**
      * 输入流转byte[]<br>
      */
-    public static  byte[] input2byte(InputStream inStream) {
+    public static byte[] input2byte(InputStream inStream) {
         if (inStream == null) {
             return null;
         }

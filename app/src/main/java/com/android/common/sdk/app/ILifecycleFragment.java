@@ -2,9 +2,7 @@ package com.android.common.sdk.app;
 
 /**
  * provide some method to make Fragment act like Activity in BackStack
- * <p/>
  * When a Fragment becomes invisible totally, {@link #onLeave} will be called.
- * <p/>
  * When a Fragment becomes visible from totally invisible, {@link #onBack()} or {@link #onBackWithData(Object)} will
  * be called.
  */

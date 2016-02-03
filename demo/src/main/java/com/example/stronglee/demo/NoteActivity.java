@@ -31,10 +31,14 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.example.stronglee.demo.DaoMaster.DevOpenHelper;
-
 import java.text.DateFormat;
 import java.util.Date;
+
+import greendao.DaoMaster;
+import greendao.DaoSession;
+import greendao.NoteDao;
+import greendao.Note;
+
 
 
 public class NoteActivity extends ListActivity {
@@ -54,8 +58,7 @@ public class NoteActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
-
-        DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "notes-db", null);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "notes-db", null);
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();

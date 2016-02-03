@@ -17,13 +17,6 @@ package com.android.common.sdk.utils;
 
 import java.net.URL;
 
-/**
- * @version V1.0
- * @Title UrlParser
- * @Package com.ta.util
- * @Description url转换工具
- * @date 2013-1-22
- */
 public class UrlParser {
     /**
      * url转换工具,确保url为绝对路径

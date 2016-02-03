@@ -1,10 +1,5 @@
 package com.android.common.sdk.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.InputStream;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -13,16 +8,13 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+
 public class DiskFileUtils {
 
-    /**
-     * @param context
-     * @param absolutePath if it's not absolutePath, will be path under cache dir
-     * @param sizeInKB
-     * @param fallbackRelativePath
-     *
-     * @return
-     */
     public static CacheDirInfo getDiskCacheDir(
             Context context, String absolutePath, int sizeInKB,
             String fallbackRelativePath) {

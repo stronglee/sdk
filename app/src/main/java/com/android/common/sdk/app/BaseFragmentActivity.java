@@ -19,10 +19,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 
     /**
      * return the string id of close warning
-     * <p/>
-     * return value which lower than 1 will exit instantly when press back key
      *
-     * @return
+     * return value which lower than 1 will exit instantly when press back key
      */
     @SuppressWarnings("JavaDoc")
     protected abstract String getCloseWarning();

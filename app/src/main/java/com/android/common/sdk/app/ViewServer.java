@@ -16,6 +16,15 @@
 
 package com.android.common.sdk.app;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewDebug;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -34,32 +43,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.os.Build;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewDebug;
-
 /**
- * <p>This class can be used to enable the use of HierarchyViewer inside an
+ * This class can be used to enable the use of HierarchyViewer inside an
  * application. HierarchyViewer is an Android SDK tool that can be used
  * to inspect and debug the user interface of running applications. For
  * security reasons, HierarchyViewer does not work on production builds
  * (for instance phones bought in store.) By using this class, you can
  * make HierarchyViewer work on any device. You must be very careful
  * however to only enable HierarchyViewer when debugging your
- * application.</p>
+ * application.
  * 
- * <p>To use this view server, your application must require the INTERNET
- * permission.</p>
+ * To use this view server, your application must require the INTERNET
+ * permission.
  * 
- * <p>The recommended way to use this API is to register activities when
- * they are created, and to unregister them when they get destroyed:</p>
+ * The recommended way to use this API is to register activities when
+ * they are created, and to unregister them when they get destroyed:
  * 
- * <pre>
+ *
  * public class MyActivity extends Activity {
  *     public void onCreate(Bundle savedInstanceState) {
  *         super.onCreate(savedInstanceState);
@@ -77,13 +77,13 @@ import android.view.ViewDebug;
  *         ViewServer.get(this).setFocusedWindow(this);
  *     }
  * }
- * </pre>
+ *
  * 
- * <p>
+ *
  * In a similar fashion, you can use this API with an InputMethodService:
- * </p>
+ *
  * 
- * <pre>
+ *
  * public class MyInputMethodService extends InputMethodService {
  *     public void onCreate() {
  *         super.onCreate();
@@ -104,7 +104,7 @@ import android.view.ViewDebug;
  *         ViewServer.get(this).setFocusedWindow(decorView);
  *     }
  * }
- * </pre>
+ *
  */
 public class ViewServer implements Runnable {
     /**
@@ -208,7 +208,6 @@ public class ViewServer implements Runnable {
      *
      * @see #stop()
      * @see #isRunning()
-     * @see WindowManagerService#startViewServer(int)
      */
     public boolean start() throws IOException {
         if (mThread != null) {
@@ -230,7 +229,6 @@ public class ViewServer implements Runnable {
      *
      * @see #start()
      * @see #isRunning()
-     * @see WindowManagerService#stopViewServer()
      */
     public boolean stop() {
         if (mThread != null) {
@@ -279,7 +277,6 @@ public class ViewServer implements Runnable {
      *
      * @see #start()
      * @see #stop()
-     * @see WindowManagerService#isViewServerRunning()  
      */
     public boolean isRunning() {
         return mThread != null && mThread.isAlive();
@@ -320,9 +317,8 @@ public class ViewServer implements Runnable {
      * Invoke this method to register a new view hierarchy.
      * 
      * @param view A view that belongs to the view hierarchy/window to register
-     * @name name The name of the view hierarchy/window to register
-     * 
-     * @see #removeWindow(View)
+     * @param  name The name of the view hierarchy/window to register
+     *
      */
     public void addWindow(View view, String name) {
         mWindowsLock.writeLock().lock();
@@ -338,8 +334,7 @@ public class ViewServer implements Runnable {
      * Invoke this method to unregister a view hierarchy.
      * 
      * @param view A view that belongs to the view hierarchy/window to unregister
-     * 
-     * @see #addWindow(View, String)
+     *
      */
     public void removeWindow(View view) {
         View rootView;

@@ -24,7 +24,9 @@ obj
 .DS_Store
 .gradle
 .local.properties
-/.idea/workspace.xml
+.idea/workspace.xml
 .idea/libraries
+.idea/gradle
+local.properties
 
 

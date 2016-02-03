@@ -114,14 +114,6 @@ public class AdapterHolder {
         view.setImageBitmap(bm);
         return this;
     }
-
-    /**
-     * 为ImageView设置图片
-     * 
-     * @param viewId
-     * @param url
-     * @return
-     */
    /* public AdapterHolder setImageByUrl(KJBitmap bitmap, int viewId, String url) {
         bitmap.display(getView(viewId), url);
         return this;

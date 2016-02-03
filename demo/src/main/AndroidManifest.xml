@@ -47,6 +47,11 @@
                 <action android:name="com.example.stronglee.demo" />
             </intent-filter>
         </activity>
+        <activity android:name=".OneTableActivity">
+            <intent-filter>
+                <action android:name="com.example.stronglee.demo" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

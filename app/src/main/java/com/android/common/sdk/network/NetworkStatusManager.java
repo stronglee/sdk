@@ -27,7 +27,7 @@ import android.util.Log;
 
 /**
  * A wrapper for a broadcast receiver that provides network connectivity state information, independent of network
- * type (mobile, Wi-Fi, etc.). {@hide}
+ * type (mobile, Wi-Fi, etc.)
  */
 public class NetworkStatusManager {
 
@@ -248,10 +248,10 @@ public class NetworkStatusManager {
         /**
          * This state is returned if there is no connectivity to any network. This is set to true under two
          * circumstances:
-         * <ul>
-         * <li>When connectivity is lost to one network, and there is no other available network to attempt to switch
-         * to.</li>
-         * <li>When connectivity is lost to one network, and the attempt to switch to another network fails.</li>
+         *
+         *When connectivity is lost to one network, and there is no other available network to attempt to switch
+         * to
+         * When connectivity is lost to one network, and the attempt to switch to another network fails
          */
         NOT_CONNECTED
     }

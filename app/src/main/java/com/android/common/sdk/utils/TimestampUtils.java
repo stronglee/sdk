@@ -18,13 +18,6 @@ package com.android.common.sdk.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-/**
- * @version V1.0
- * @Title TimestampUtil
- * @Package com.ta.util
- * @Description 时间戳操作类分享的类
- * @date 2013-1-22 下午 14:57
- */
 public class TimestampUtils {
     private static long day = 7;
 

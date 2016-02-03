@@ -14,7 +14,6 @@ import com.orhanobut.logger.Logger;
 
 /**
  * Implement {@link ILifecycleFragment}, {@link IComponentContainer}
- * <p/>
  * Ignore {@link LifeCycleComponentManager#onBecomesPartiallyInvisible}
  */
 public abstract class BaseFragment extends Fragment implements ILifecycleFragment, IComponentContainer {

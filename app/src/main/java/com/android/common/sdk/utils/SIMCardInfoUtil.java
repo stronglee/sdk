@@ -17,15 +17,6 @@ package com.android.common.sdk.utils;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;
-
-/**
- * @version V1.0
- * @Title SIMCardInfoUtil
- * @Package com.ta.util.extend.app
- * @Description 用户返回客户端SIM卡的一些信息 需要开启 <uses-permission
- * android:name="android.permission.READ_PHONE_STATE"/>
- * @date 2013-1-10 下午 13:53
- */
 public class SIMCardInfoUtil {
     /**
      * 返回本地手机号码，这个号码不一定能获取到

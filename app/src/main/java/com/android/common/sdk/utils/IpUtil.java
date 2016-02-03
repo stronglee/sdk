@@ -25,28 +25,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-/**
- * @version V1.0
- * @Title IpUtil
- * @Package com.ta.util.extend.app
- * @Description IpUtil返回客户端IP地址
- * @date 2013-1-10 下午 13:53
- */
 public class IpUtil {
-    /**
-     * 使用Wifi时获取IP 设置用户权限
-     * <p/>
-     * <uses-permission
-     * android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-     * <p/>
-     * <uses-permission
-     * android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-     * <p/>
-     * <uses-permission
-     * android:name="android.permission.WAKE_LOCK"></uses-permission>
-     *
-     * @return
-     */
     public static String getWifiIp(Context context) {
         // 获取wifi服务
         WifiManager wifiManager = (WifiManager) context
@@ -68,11 +47,7 @@ public class IpUtil {
 
     /**
      * 使用GPRS上网，时获取ip地址，设置用户上网权限
-     * <p/>
-     * <uses-permission
-     * android:name="android.permission.INTERNET"></uses-permission>
      *
-     * @return
      */
     public static String getGPRSIp() {
         try {

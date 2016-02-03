@@ -20,6 +20,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         initStetho();
         initGlideForOkHttp();
+        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
     }
 
     @Override

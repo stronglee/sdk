@@ -1,4 +1,23 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
+publish {
+    userOrg = 'stronglee'
+    groupId = 'com.android.common.sdk'
+    artifactId = 'bintrayaar'
+    publishVersion = '0.0.1'
+    desc = 'android develop util'
+    website = 'https://github.com/stronglee/sdk'
+}
 
 android {
     compileSdkVersion 23
@@ -10,6 +29,11 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -26,5 +50,4 @@ dependencies {
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:percent:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-
 }

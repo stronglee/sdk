@@ -10,13 +10,18 @@ import java.util.List;
 import greendao.DaoSession;
 import greendao.Users;
 import greendao.UsersDao;
+import greendao.infoType;
+import greendao.infoTypeDao;
+import greendao.infos;
+import greendao.infosDao;
 
 
 public class DbManager {
-    private static final String TAG = DbManager.class.getSimpleName();
     private static DbManager mInstance;
     private DaoSession mDaoSession;
     private UsersDao userDao;
+    private infoTypeDao infoTypeDao;
+    private infosDao infosDao;
 
 
     private DbManager() {
@@ -28,6 +33,8 @@ public class DbManager {
             mInstance = new DbManager();
             mInstance.mDaoSession = MyApplication.getDaoSession(context);
             mInstance.userDao = mInstance.mDaoSession.getUsersDao();
+            mInstance.infoTypeDao = mInstance.mDaoSession.getInfoTypeDao();
+            mInstance.infosDao = mInstance.mDaoSession.getInfosDao();
         }
         return mInstance;
     }
@@ -130,5 +137,39 @@ public class DbManager {
      */
     public void deleteNote(Users user) {
         userDao.delete(user);
+    }
+
+    public Long SaveInfoType(infoType type) {
+        return infoTypeDao.insertOrReplace(type);
+    }
+
+    public void deleteInfoType(long id) {
+        infoTypeDao.load(id).delete();
+    }
+
+    public List<infoType> getAllInfoTypeList() {
+        return infoTypeDao.queryBuilder().orderDesc(greendao.infoTypeDao.Properties.Id).list();
+    }
+
+    public infoType agetInfoType(long id) {
+        return infoTypeDao.load(id);
+    }
+
+    public List<infos> getInfosByTypeId(long typeId) {
+        return infoTypeDao.load(typeId).getInfoes();
+    }
+
+    public long saveInfo(infos info) {
+        return infosDao.insertOrReplace(info);
+    }
+
+    public List<infos> getAllInfos() {
+        return infosDao.loadAll();
+    }
+
+    public List<infos> getInfosByPageSize(long typeId, int pageNum, int pageSize) {
+        return infosDao.queryBuilder().where(greendao.infosDao.Properties.TypeId.eq(typeId)).offset(pageNum - 1)
+                .limit(pageSize).list();
+
     }
 }

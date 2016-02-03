@@ -20,7 +20,6 @@ public class ContentActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.next_button).setOnClickListener(this);
         pushFragmentToBackStack(FragmentOne.class,null);
         pushFragmentToBackStack(FragmentTwo.class,null);
-
     }
 
     @Override

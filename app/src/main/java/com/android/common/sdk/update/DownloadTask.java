@@ -1,19 +1,17 @@
 package com.android.common.sdk.update;
 
+import android.webkit.URLUtil;
+
+import com.android.common.sdk.utils.DiskFileUtils;
+import com.android.common.sdk.utils.FileUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.android.common.sdk.utils.DiskFileUtils;
-import com.android.common.sdk.utils.FileUtils;
-
-import android.webkit.URLUtil;
-
 public class DownloadTask extends SimpleTask {
-
-    private static final String LOG_TAG = "sdk-update";
 
     public static final int RESULT_OK = 1;
     public static final int RESULT_URL_ERROR = 2;
